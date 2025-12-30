@@ -21,15 +21,16 @@ body {
     box-shadow: 0 0 20px rgba(255, 77, 109,0.5);
 }
 
-input, select { 
-    width:calc(100% - 24px); 
-    padding:12px; 
-    margin-top:10px; 
-    border-radius:10px; 
-    border:none; 
-    font-size:16px; 
+input, select {
+    width: 100%;
+    padding:12px;
+    margin-top:10px;
+    border-radius:10px;
+    border:none;
+    font-size:16px;
     box-sizing:border-box;
 }
+
 
 button { 
     width:100%; 
@@ -93,9 +94,15 @@ tbody tr:not(:last-child) td {
         font-size: 16px;
     }
 
-    .card {
-        width: 95%;
-        padding: 16px;
+    .card { 
+        background: rgba(0,0,0,0.6); 
+        width: 100%;
+        max-width: 360px;
+        margin: 16px auto; 
+        padding: 25px; 
+        border-radius:16px; 
+        box-shadow: 0 0 20px rgba(255, 77, 109,0.5);
+        box-sizing: border-box;
     }
 
     button {
@@ -111,14 +118,5 @@ tbody tr:not(:last-child) td {
 
     table {
         font-size: 14px;
-    }
-}
-@media (max-width: 768px) {
-
-    .card {
-        margin: 16px auto;   /* ⭐ 위아래 + 좌우 여백 */
-        padding: 16px;
-        width: calc(100% - 32px);  /* 화면 양옆 숨 쉴 공간 */
-        box-sizing: border-box;
     }
 }
