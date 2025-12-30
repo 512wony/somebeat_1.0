@@ -43,8 +43,10 @@ button.signup-btn {
 }
 
 button.login-btn {
-    width: 360px;
+    width: 100%;
+    max-width: 100%;
 }
+
 </style>
 </head>
 <body>
@@ -73,8 +75,7 @@ button.login-btn {
           {% endif %}
         {% endwith %}
 
-        <div style="flex-basis:100%; text-align:center; margin-top:10px;">
-            <button type="submit" class="login-btn">로그인</button>
+        <button type="submit" class="login-btn">로그인</button>
         </div>
     </form>
 
