@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🎉 SOME BEAT 로그인</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-item label {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    height: 36px;
+}
+
+.form-item input {
+    height: 36px;
+    padding: 5px 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+/* 회원가입 버튼 스타일을 연하게 */
+button.signup-btn {
+    background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.2));
+    color: white;
+    font-weight: bold;
+}
+
+button.login-btn {
+    width: 360px;
+}
+</style>
+</head>
+<body>
+<div class="card">
+    <h2>🎉 SOME BEAT 로그인</h2>
+
+    <!-- 로그인 폼 -->
+    <form method="POST" class="form-container">
+        <div class="form-item">
+            <label>닉네임:</label>
+            <input type="text" name="nickname" placeholder="닉네임" required>
+        </div>
+
+        <div class="form-item">
+            <label>비밀번호:</label>
+            <input type="password" name="password" placeholder="비밀번호" required>
+        </div>
+
+        {% with messages = get_flashed_messages(category_filter=["login"]) %}
+          {% if messages %}
+            <div style="color:#FF4D6D; font-weight:bold;">
+              {% for msg in messages %}
+                {{ msg }}
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <div style="flex-basis:100%; text-align:center; margin-top:10px;">
+            <button type="submit" class="login-btn">로그인</button>
+        </div>
+    </form>
+
+    <!-- 회원가입 버튼 -->
+    <form action="{{ url_for('signup') }}" style="margin-top:10px;">
+        <button type="submit" class="signup-btn">회원가입</button>
+    </form>
+</div>
+</body>
+</html>

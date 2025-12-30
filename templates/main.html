@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🎉 SOME BEAT</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="card">
+    <h2>🎉 SOME BEAT</h2>
+    <p>--------------------------------------</p>
+    <p>💡 썸 보내기 = 1비트 사용</p>
+    <p>💡 누가 보냈는지 확인 = 2비트 사용</p>
+    <p>💡 처음 입장 시 1비트 지급</p>
+    <p>💡 쉬는 시간마다 호스트가 비트를 선물합니다!</p>
+    <p>--------------------------------------</p>
+
+    <p>닉네임: {{ user['nickname'] }} | 내 비트: {{ user['bit'] }} | 받은 썸: {{ received_count if received_count > 0 else '없음' }}</p>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <div style="color:#FF4D6D; font-weight:bold; margin-bottom:10px;">
+            {% for msg in messages %}
+                <p>{{ msg }}</p>
+            {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% if user['received_som'] and not user['checked_som_once'] %}
+        <div style="color:#fbff00; font-weight:bold; margin-bottom:10px;">
+        <p>누군가가 나에게 썸을 보냈어요 💕</p>
+    {% endif %}
+    {% if user['new_received_som'] %}
+        <div style="color:#fbff00; font-weight:bold; margin-bottom:10px;">
+        <p>새로 받은 썸이 있어요 💕</p>
+    {% endif %}
+
+    <!-- 검색 폼 -->
+    <form method="POST">
+        <input type="text" name="search_nick" placeholder="닉네임 검색" style="width:280px;">
+        <button type="submit" style="width:70px;">검색</button>
+    </form>
+
+    <!-- 검색 결과 영역 -->
+    <div id="search_result_area">
+        {% if search_result is not none %}
+            {% if search_result %}
+                <div style="display:flex; align-items:center;">
+                    <p style="margin:0;">
+                         💘 {{ search_result['nickname'] }} ({{ search_result['gender'] }})
+                    </p>
+
+                    <form method="POST" style="margin-left:auto;">
+                        <button type="submit"
+                                name="send_som"
+                                value="{{ search_result['nickname'] }}"
+                                style="background-color:#0c638b; color:#ffffff;">
+                            💌 썸 보내기 (1 비트)
+                        </button>
+                    </form>
+                </div>
+            {% else %}
+                <p>검색 결과가 없습니다.</p>
+            {% endif %}
+        {% endif %}
+    </div>
+
+
+
+
+
+    <!-- 받은 썸 표시 -->
+    <div style="
+        background-color:#494949;
+        padding:12px;
+        border-radius:10px;
+        margin:12px 0;
+    ">
+        {% if received_som_list %}
+            <ul>
+                {% for s in received_som_list %}
+                    <li>나에게 썸을 보낸 사람은 '{{ s }}' 💕</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p style="margin:0; color:#ffffff;">아직 공개된 썸이 없어요</p>
+        {% endif %}
+        
+        
+    </div>
+ 
+    {% if total_som == 0 %}
+        <button type="button" disabled style="opacity:0.5;">
+            받은 썸 없음
+        </button>
+
+    {% elif user.new_received_som and not user.checked_som_once %}
+        <form method="POST">
+            <button type="submit" name="check_som">
+                받은 썸 확인하기 (2 비트)
+            </button>
+        </form>
+
+    {% elif user.new_received_som and user.checked_som_once %}
+        <form method="POST">
+            <button type="submit" name="check_som">
+                추가로 받은 썸 확인하기 (0 비트)
+            </button>
+        </form>
+
+    {% else %}
+        <button type="button" disabled style="opacity:0.5;">
+            ✔ 받은 썸 모두 확인함
+        </button>
+    {% endif %}
+
+
+   
+
+
+    <form action="{{ url_for('order') }}">
+        <button>주문하기 & 주문내역</button>
+    </form>
+
+    {% if is_host %}
+    <form method="POST">
+        <button type="submit" name="give_bit">호스트가 비트를 선물해드려요</button>
+    </form>
+    {% endif %}
+
+    <form action="{{ url_for('logout') }}">
+        <button>로그아웃</button>
+    </form>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🎉 SOME BEAT - 호스트 모드</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="card">
+    <h2>🎉 SOME BEAT - 호스트 모드</h2>
+    <p>총 비트 선물: {{ host['bit_given'] }}</p>
+    <h3>👥 참가자 현황 ({{ users | length }}명)</h3>
+    {% set male_count = users.values() | selectattr('gender', 'equalto', '남') | list | length %}
+    {% set female_count = users.values() | selectattr('gender', 'equalto', '여') | list | length %}
+
+    <p style="margin-bottom:8px;">
+        👨 남 {{ male_count }}명 / 👩 여 {{ female_count }}명
+    </p>
+    <ul>
+        {% for u in users.values() %}
+            <li>{{ u['nickname'] }}({{ u.gender }}) | 비트: {{ u['bit'] }}</li>
+        {% endfor %}
+    </ul>
+    <form method="POST">
+        <button type="submit" name="give_bit"
+        style="background:#8ecae6; color:#023047;">
+        🎁 비트 선물하기</button>
+    </form>
+
+
+
+    <form action="{{ url_for('order') }}">
+        <button>주문하기 & 주문내역</button>
+    </form>
+    <form method="POST" action="{{ url_for('host_reset') }}">
+        <button type="submit"
+                style="background-color:#87CEFA; color:#000;"
+                onclick="return confirm('⚠️ 정말 서버를 초기화하시겠습니까? 모든 사용자와 주문 데이터가 삭제됩니다!');">
+            서버 초기화
+        </button>
+    </form>
+
+    <form action="{{ url_for('logout') }}">
+        <button>로그아웃</button>
+    </form>
+</div>
+</body>
+</html>
+

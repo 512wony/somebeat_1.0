@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🎉 SOME BEAT 회원가입</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<style>
+.form-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-item label {
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    height: 36px;
+}
+
+.form-item input,
+.form-item select {
+    height: 36px;
+    padding: 5px 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.gender-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.gender-box label {
+    margin: 0;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+}
+</style>
+</head>
+<body>
+<div class="card">
+    <h2>🎉 SOME BEAT 회원가입</h2>
+    <!-- flash 메시지: signup 전용 -->
+    {% with messages = get_flashed_messages(category_filter=["signup"]) %}
+      {% if messages %}
+        <div style="color:#FF4D6D; font-weight:bold; margin-bottom:10px;">
+          {% for msg in messages %}
+            <p>{{ msg }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="form-container">
+        <div class="form-item">
+            <label>아이디:</label>
+            <input type="text" name="nickname" placeholder="닉네임" required>
+        </div>
+
+        <div class="form-item">
+            <label>비밀번호:</label>
+            <input type="password" name="password" placeholder="비밀번호" required>
+        </div>
+
+        <div class="form-item">
+            <label>테이블:</label>
+            <select name="table" required>
+                {% for i in range(1,9) %}
+                <option value="T{{ i }}">T{{ i }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="form-item">
+            <label>성별:</label>
+            <div class="gender-box">
+                <label><input type="radio" name="gender" value="남" required> 남</label>
+                <label><input type="radio" name="gender" value="여" required> 여</label>
+            </div>
+        </div>
+
+        <div style="flex-basis:100%; text-align:center; margin-top:10px;">
+            <button type="submit">가입 & 입장</button>
+        </div>
+    </form>
+
+    <form action="{{ url_for('login') }}" style="margin-top:10px;">
+        <button>로그인</button>
+    </form>
+</div>
+</body>
+</html>

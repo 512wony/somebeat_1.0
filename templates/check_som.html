@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>💌 SOME BEAT - 썸 확인</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="card">
+<h2>💌 새 썸 확인</h2>
+{% if new_som %}
+    <ul>
+    {% for s in new_som %}
+        <li>{{ s }}님이 썸을 보냈습니다! 💕</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>새 썸이 없습니다! 😊</p>
+{% endif %}
+<form action="{{ url_for('main') }}">
+    <button>메인으로</button>
+</form>
+</div>
+</body>
+</html>

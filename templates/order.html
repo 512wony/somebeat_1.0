@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>🎉 SOME BEAT 주문하기</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="card">
+    <h2>🎉 주문하기 & 주문내역</h2>
+
+    {% with messages = get_flashed_messages(category_filter=["order"]) %}
+      {% if messages %}
+        <div style="color:#FF4D6D; font-weight:bold;">
+          {% for msg in messages %}
+            <p>{{ msg }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <p><label>테이블:
+            <select name="table" style="width:120px;">
+                {% for t in tables %}
+                <option value="{{ t }}">{{ t }}</option>
+                {% endfor %}
+            </select>
+        </label></p>
+        <p><label>안주:
+            <select name="menu" style="width:120px;">
+                {% for m in menu_list %}
+                <option value="{{ m }}">{{ m }}</option>
+                {% endfor %}
+            </select>
+        </label></p>
+        <p><label>수량:
+            <input type="number" name="quantity" min="1" value="1" style="width:120px;">
+        </label></p>
+        <button type="submit">주문</button>
+    </form>
+    <form action="{{ url_for('main') }}">
+        <button>메인으로</button>
+    </form>
+    <hr>
+    <h3>주문 내역</h3>
+    <div style="overflow-x:auto;"></div>
+        <table style="width:100%; border-collapse: collapse;">
+            <thead>
+                <tr>
+                    <th>테이블</th>
+                    <th>안주</th>
+                    <th>수량</th>
+                    <th>상태</th>
+                    <th>배달완료</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for o in orders %}
+                <tr>
+                    <td style="text-align:center;">{{ o['table'] }}</td>
+                    <td style="text-align:center;">{{ o['menu'] }}</td>
+                    <td style="text-align:center;">{{ o['quantity'] }}</td>
+                    <td style="text-align:center;">{{ o['status'] }}</td>
+                    <td style="text-align:center;">
+                        {% if o['status'] == '조리중' %}
+                            <form method="POST">
+                                <input type="hidden" name="deliver_id" value="{{ o['id'] }}">
+                                <button type="submit">배달완료</button>
+                            </form>
+                        {% else %}
+                            <!-- 디자인 유지 + 비활성화 -->
+                            <button type="button" disabled style="opacity:0.5; cursor:not-allowed;">
+                                배달완료
+                            </button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>    
+
+
+
+</div>
+</body>
+</html>
