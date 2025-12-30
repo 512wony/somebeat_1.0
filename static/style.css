@@ -47,6 +47,23 @@ button {
     transition: background 0.3s ease;
 }
 
+button.signup-btn {
+    max-width: 360px;   /* 카드 폭과 동일하게 제한 */
+    width: 100%;         /* 화면 좁으면 줄어듦 */
+    padding: 12px;
+    border-radius: 12px;
+    border: none;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    background: linear-gradient(135deg, rgba(255,255,255,0.3), rgba(255,255,255,0.2));
+    color: white;
+    transition: background 0.3s ease;
+    box-sizing: border-box;
+    margin: auto;        /* 가운데 정렬 */
+    display: block;
+}
+
 button.host { 
     background: linear-gradient(135deg, rgba(77,184,255,0.6), rgba(77,184,255,0.4)); 
     color:white; 
@@ -110,6 +127,11 @@ tbody tr:not(:last-child) td {
         padding: 12px;
         font-size: 16px;
     }
+
+    button.signup-btn {
+        width: 95%;      /* 카드 폭보다 약간 작게 */
+        max-width: none;
+    }    
 
     input, select {
         width: 100%;
