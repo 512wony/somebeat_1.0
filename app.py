@@ -17,6 +17,17 @@ HOST_ACCOUNT = {
 
 orders = []
 
+menu_status = {
+    "닭강정": True,
+    "카나페": True,
+    "팝콘": True,
+    "붕어빵(10시 이후)": True,
+    "나쵸(2부)": True,
+    "과일(2부)": True,
+    "두부김치": True,
+    "타코야키": True
+}
+
 # =========================
 # 회원가입
 # =========================
@@ -235,7 +246,6 @@ def order():
 
     menu_list = ["닭강정", "카나페", "팝콘", "붕어빵(10시 이후)", "나쵸(2부)", "과일(2부)", "두부김치", "타코야키"]
     tables = [f"T{i}" for i in range(1, 9)]
-    menu_status = {menu: True for menu in menu_list}
 
     if request.method == 'POST':
 
