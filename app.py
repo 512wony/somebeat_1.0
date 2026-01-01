@@ -217,7 +217,7 @@ def host():
             HOST_ACCOUNT['bit_given'] += 1
             flash(f"호스트가 총 {HOST_ACCOUNT['bit_given']}개의 비트를 선물했습니다!", category="host")
 
-    return render_template('host.html', users=users, menu_status=menu_status)
+    return render_template('host.html', users=users, host=HOST_ACCOUNT, menu_status=menu_status)
 
 
 @app.route('/host/toggle_menu', methods=['POST'])
