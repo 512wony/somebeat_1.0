@@ -11,6 +11,20 @@
 <div class="card">
     <h2>🎉 주문하기 & 주문내역</h2>
     <p>🍳 주문 시 조리에 10~15분 정도 소요됩니다!</p>
+    {% for menu, available in menu_status.items() %}
+        {% if not available %}
+            <p style="
+                color:#fffb00;
+                font-weight:bold;
+                text-align:center;
+                margin:6px 0;
+            ">
+                🚫 {{ menu }} 품절 안내
+            </p>
+        {% endif %}
+    {% endfor %}
+
+    <hr>
 
     {% with messages = get_flashed_messages(category_filter=["order"]) %}
       {% if messages %}

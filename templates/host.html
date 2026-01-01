@@ -30,6 +30,26 @@
         🎁 비트 선물하기</button>
     </form>
 
+    <hr>
+    <h3>🍽 안주 품절 관리</h3>
+
+    {% for menu, available in menu_status.items() %}
+        <form method="POST" action="/host/toggle_menu" style="margin-bottom:8px;">
+            <button type="submit"
+                    name="menu"
+                    value="{{ menu }}"
+                    class="host"
+                    style="width:100%;">
+                {{ menu }}
+                →
+                {% if available %}
+                    판매중
+                {% else %}
+                    ❌ 품절
+                {% endif %}
+            </button>
+        </form>
+    {% endfor %}
 
 
     <form action="{{ url_for('order') }}">

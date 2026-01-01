@@ -206,7 +206,19 @@ def host():
             HOST_ACCOUNT['bit_given'] += 1
             flash(f"호스트가 총 {HOST_ACCOUNT['bit_given']}개의 비트를 선물했습니다!", category="host")
 
-    return render_template('host.html', host=HOST_ACCOUNT, users=users)
+    return render_template('host.html', users=users, menu_status=menu_status)
+
+
+@app.route('/host/toggle_menu', methods=['POST'])
+def toggle_menu():
+    if not session.get('is_host'):
+        return redirect(url_for('login'))
+
+    menu = request.form.get('menu')
+    if menu in menu_status:
+        menu_status[menu] = not menu_status[menu]
+
+    return redirect(url_for('host'))
 
 
 # =========================
@@ -223,6 +235,7 @@ def order():
 
     menu_list = ["닭강정", "카나페", "팝콘", "붕어빵(10시 이후)", "나쵸(2부)", "과일(2부)", "두부김치", "타코야키"]
     tables = [f"T{i}" for i in range(1, 9)]
+    menu_status = {menu: True for menu in menu_list}
 
     if request.method == 'POST':
 
