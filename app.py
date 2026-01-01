@@ -271,6 +271,7 @@ def order():
         user=user,
         orders=orders,
         menu_list=menu_list,
+        menu_status=menu_status,
         tables=tables,
         is_host=is_host
     )
