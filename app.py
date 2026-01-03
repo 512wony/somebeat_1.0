@@ -83,6 +83,7 @@ def login():
 
         # 호스트 로그인
         if nickname == HOST_ACCOUNT['nickname'] and password == HOST_ACCOUNT['password']:
+            session.clear()
             session['nickname'] = nickname
             session['is_host'] = True
             session['role'] = 'host' 
@@ -90,6 +91,7 @@ def login():
 
         # 일반 유저 로그인
         if nickname in users and users[nickname]['password'] == password:
+            session.clear()
             session['nickname'] = nickname
             session['is_host'] = False
             session['role'] = 'user' 
