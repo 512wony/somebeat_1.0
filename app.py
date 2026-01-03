@@ -15,6 +15,9 @@ HOST_ACCOUNT = {
     'bit_given': 0
 }
 
+STAFF_NICKNAME = "staff_sb"
+STAFF_PASSWORD = "staff123"
+
 orders = []
 
 menu_status = {
@@ -71,16 +74,25 @@ def login():
         nickname = request.form['nickname']
         password = request.form['password']
 
+        # 스태프 로그인
+        if nickname == STAFF_NICKNAME and password == STAFF_PASSWORD:
+            session.clear()
+            session['nickname'] = STAFF_NICKNAME
+            session['role'] = 'staff'
+            return redirect(url_for('order'))
+
         # 호스트 로그인
         if nickname == HOST_ACCOUNT['nickname'] and password == HOST_ACCOUNT['password']:
             session['nickname'] = nickname
             session['is_host'] = True
+            session['role'] = 'host' 
             return redirect(url_for('host'))
 
         # 일반 유저 로그인
         if nickname in users and users[nickname]['password'] == password:
             session['nickname'] = nickname
             session['is_host'] = False
+            session['role'] = 'user' 
             return redirect(url_for('main'))
 
         flash("아이디 또는 비밀번호가 틀렸습니다!", category="login")

@@ -80,7 +80,7 @@
                     <td style="text-align:center;">{{ o['quantity'] }}</td>
                     <td style="text-align:center;">{{ o['status'] }}</td>
                     <td style="text-align:center;">
-                        {% if o['status'] == '조리중' %}
+                        {% if o['status'] == '조리중' and session.get('role') in ['host', 'staff'] %}
                             <form method="POST">
                                 <input type="hidden" name="deliver_id" value="{{ o['id'] }}">
                                 <button type="submit">배달완료</button>
