@@ -80,16 +80,22 @@
                     <td style="text-align:center;">{{ o['quantity'] }}</td>
                     <td style="text-align:center;">{{ o['status'] }}</td>
                     <td style="text-align:center;">
-                        {% if o['status'] == '조리중' and session.get('role') in ['host', 'staff'] %}
-                            <form method="POST">
-                                <input type="hidden" name="deliver_id" value="{{ o['id'] }}">
-                                <button type="submit">배달완료</button>
-                            </form>
-                        {% else %}
-                            <!-- 디자인 유지 + 비활성화 -->
-                            <button type="button" disabled style="opacity:0.5; cursor:not-allowed;">
-                                배달완료
-                            </button>
+
+                        {% if session.get('role') in ['host', 'staff'] %}
+
+                            {% if o['status'] == '조리중' %}
+                                <form method="POST" style="margin:0;">
+                                    <input type="hidden" name="deliver_id" value="{{ o['id'] }}">
+                                    <button type="submit">배달완료</button>
+                                </form>
+                            {% else %}
+                                <!-- 스태프/호스트용: 완료 후 딤드 -->
+                                <button type="button" disabled
+                                        style="opacity:0.5; cursor:not-allowed;">
+                                    배달완료
+                                </button>
+                            {% endif %}
+
                         {% endif %}
                     </td>
                 </tr>
