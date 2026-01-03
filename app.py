@@ -251,6 +251,7 @@ def toggle_menu():
 # =========================
 @app.route('/order', methods=['GET', 'POST'])
 def order():
+    print("DEBUG ROLE:", session.get('role'))
     nickname = session.get('nickname')
     if not nickname:
         return redirect(url_for('login'))
