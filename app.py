@@ -37,6 +37,8 @@ menu_status = {
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     if request.method == 'POST':
+        session.clear()
+        
         nickname = request.form['nickname']
         password = request.form['password']
         table = request.form['table']
